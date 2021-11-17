@@ -33,7 +33,7 @@ namespace DevTest_2.Controllers
             return View(employees.ToList());
         }
 
-        public ActionResult Create() => View();
+        public ActionResult Create() => View(new Employee() { BirthDate = DateTime.Parse("01/01/2000").Date });
 
         [HttpPost]
         public ActionResult Create([Bind(Include = "ID,Name,LastName,RFC,BirthDate,Status")] Employee employee)
@@ -65,7 +65,9 @@ namespace DevTest_2.Controllers
             Employee employee = db.Employees.Find(id);
             if (employee == null)
                 return HttpNotFound();
-            
+
+            employee.BirthDate = employee.BirthDate.Date;
+
             return View(employee);
         }
 
